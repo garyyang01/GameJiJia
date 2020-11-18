@@ -17,16 +17,16 @@ namespace GameJiJia.Controllers
         public HomeController(ILogger<HomeController> logger)
         {
             _client = new MongoClient("mongodb+srv://gary:1234qwer@test.53zvo.mongodb.net/test?retryWrites=true&w=majority");
-            _log.Debug("Constructor");
         }
 
         public IActionResult Index()
         {
-            var database = _client.GetDatabase("test");
-            var document = database.GetCollection<BsonDocument>("sample_mflix");
+            var database = _client.GetDatabase("sample_mflix");
+            var document = database.GetCollection<BsonDocument>("users");
             var filter = new BsonDocument("theaterId", 1000);
-            var data = document.Find(new BsonDocument()).ToList();
-            _log.Debug($"first data: {data}");
+            var data = document.Find(x=>true).Limit(10).ToList();
+            var showString = string.Join(',',data.Select(x=>x.ToString()));
+            _log.Debug($"first data: {showString}");
             return View();
         }
 
