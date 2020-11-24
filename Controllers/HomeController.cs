@@ -12,21 +12,13 @@ namespace GameJiJia.Controllers
     public class HomeController : Controller
     {
         private ILog _log = LogManager.GetLogger(Startup.repository.Name, typeof(HomeController));
-        private MongoClient _client;
 
         public HomeController(ILogger<HomeController> logger)
         {
-            _client = new MongoClient("mongodb+srv://gary:1234qwer@test.53zvo.mongodb.net/test?retryWrites=true&w=majority");
         }
 
         public IActionResult Index()
         {
-            var database = _client.GetDatabase("sample_mflix");
-            var document = database.GetCollection<BsonDocument>("users");
-            var filter = new BsonDocument("theaterId", 1000);
-            var data = document.Find(x=>true).Limit(10).ToList();
-            var showString = string.Join(',',data.Select(x=>x.ToString()));
-            _log.Debug($"first data: {showString}");
             return View();
         }
 
