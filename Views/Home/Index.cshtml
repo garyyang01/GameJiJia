@@ -7,30 +7,35 @@
 @section Style
 {
     <link rel="stylesheet" type="text/css" href="~/css/Login.css" />
+    @{
+        if (TempData["status"] != null)
+        {
+            <script>
+                alert("@TempData["status"]");
+            </script>
+        }
+    }
 }
 @section Scripts
 {
     <script>
-        function Validation() {
-            this.value = value.replace(/[\W]/g, '');
-        }
-        $('.message a').click(function(){
-            $('form').animate({height: "toggle", opacity: "toggle"}, "slow");
+        $('.message a').click(function () {
+            $('form').animate({ height: "toggle", opacity: "toggle" }, "slow");
         });
     </script>
 }
 <div class="login-page">
     <div class="form">
         <form class="register-form" asp-controller="Home" asp-action="Register" method="post">
-            <input onKeyUp="@validation" type="text" placeholder="name" name="accountId" required="true"/>
-            <input onKeyUp="@validation" type="password" placeholder="password" name="password" required="true"/>
-            <input  type="email" placeholder="email address" name="emailAddress" required="true"/>
+            <input onKeyUp="@validation" type="text" placeholder="name" name="accountId" required="true" />
+            <input onKeyUp="@validation" type="password" placeholder="password" name="password" required="true" />
+            <input type="email" placeholder="email address" name="emailAddress" required="true" />
             <button>create</button>
             <p class="message">Already registered? <a href="#">Sign In</a></p>
         </form>
         <form class="login-form" asp-controller="Home" asp-action="Login" method="post">
-            <input id="Login-accountid"onKeyUp="@validation" type="text" placeholder="username" name="accountId" required="true"/>
-            <input onKeyUp="@validation"type="password" placeholder="password" name="password" required="true"/>
+            <input id="Login-accountid" onKeyUp="@validation" type="text" placeholder="username" name="accountId" required="true" />
+            <input onKeyUp="@validation" type="password" placeholder="password" name="password" required="true" />
             <button>login</button>
             <p class="message">Not registered? <a href="#">Create an account</a></p>
         </form>

@@ -31,33 +31,36 @@ namespace GameJiJia.Controllers
         public async Task<IActionResult> Login(string accountId, string password)
         {
             _log.Info($"accoumtId : {accountId}, password : {password}");
-            var response= await _gameJiJiaService.LoginUser(new UserInfo()
+            var loginSuccess= await _gameJiJiaService.LoginUser(new UserInfo()
             {
                 AccountId = accountId,
                 Password = password
             });
-            if (response)
+            if (loginSuccess)
             {
                 return RedirectToAction("Home");
             }
-            return RedirectToAction("Error");
+            TempData["status"] = "Wrong username or password. Please try again.";
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
         public async Task<IActionResult> Register(string accountId, string password, string emailAddress)
         {
             _log.Info($"accoumtId : {accountId}, password : {password}, emailAddress: {emailAddress}");
-            var response = await _gameJiJiaService.RegisterUser(new UserInfo()
+            var registerSuccess = await _gameJiJiaService.RegisterUser(new UserInfo()
             {
                 AccountId = accountId,
                 Password = password,
                 EmailAddress = emailAddress
             });
-            if (response)
+            if (registerSuccess)
             {
                 return RedirectToAction("Home");
             }
-            return RedirectToAction("Error");
+
+            TempData["status"] = "This username has been used. Please change another username.";
+            return RedirectToAction("Index");
         }
 
         public IActionResult Privacy()
